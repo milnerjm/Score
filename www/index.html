@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/fa-4.5.0/css/fa.min.css"/>
+
+    <title>Score!</title>
+</head>
+
+<body>
+    <div id="header" class="header">
+       <span class="nav-open" onclick="app.navopen()">☰</span>
+    </div>
+    <div id="sidenav" class="sidenav">
+      <a href="javascript:app.navclose()" class="nav-close">×</a>
+      <a href="javascript:app.new()">New Game</a>
+      <a href="javascript:app.save()">Save Game</a>
+      <a href="javascript:app.load()">Load Game</a>
+      <a href="javascript:app.roll()">Roll Dice</a>        
+    </div>
+
+    <div id="content" class="content"></div>
+
+    <div id="numModal" class="modal">
+        <div class="modal-content">
+            <input type="number" id="entry"><br/><br/>
+            <div class="modal-btn" id="enter">Enter</div>
+        </div>
+    </div>
+    
+    <div id="footer" class="footer">
+        <div class="app">
+            <div id="deviceready">
+                <div class="event listening">
+                    <i class="fa fa-thumbs-down fa-3x"></i>
+                </div>
+                <div class="event received">
+                    <i class="fa fa-thumbs-up fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript">dev.initialize();</script>
+    <script type="text/javascript">app.init();</script>
+</body>
+
+</html>
