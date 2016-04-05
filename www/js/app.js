@@ -5,6 +5,16 @@ function make(name){
   return document.createElement(name);
 }
 
+function printObj(obj){
+    var len = obj.length;
+    var out = "";
+    for(var i in obj){
+        out += i + ": " + i.value + "\n";
+    }
+    alert(out);
+    return null;
+}
+
 var app = {
   init: function(){
     $("content").innerHTML = view.home;
@@ -23,6 +33,7 @@ var app = {
   },
   new: function(){
     $("content").innerHTML = view.new;
+    $("player1").focus();
     app.navclose();
   },
   add: function(){
@@ -39,11 +50,18 @@ var app = {
   },
   save: function(){
     var entries = document.getElementsByTagName("tr");
-    var data = {};
+    var data = [];
     for (var i = 0; i < entries.length; i++) {
       var name = entries[i].children[0].textContent;
       var score = entries[i].children[1].textContent;
-      data.name = score;
+      localStorage.setItem("name"+i, name);
+      localStorage.setItem("score"+i, score);
+    }
+    var cnt = localStorage.length;
+    alert(cnt);
+    for (var i = 0; i < cnt.length; i++) {
+      var n = "name"+i;
+      alert("Name: " + localStorage.n);
     }
   },
   remove: function(e){

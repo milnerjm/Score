@@ -5,6 +5,16 @@ function make(name){
   return document.createElement(name);
 }
 
+function printObj(obj){
+    var len = obj.length;
+    var out = "";
+    for(var i in obj){
+        out += i + ": " + i.value + "\n";
+    }
+    alert(out);
+    return null;
+}
+
 var app = {
   init: function(){
     $("content").innerHTML = view.home;
@@ -17,8 +27,13 @@ var app = {
       $("content").innerHTML = view.home;
     }
   },
+  home: function(){
+    $("content").innerHTML = view.home;
+    app.navclose();
+  },
   new: function(){
     $("content").innerHTML = view.new;
+    $("player1").focus();
     app.navclose();
   },
   add: function(){
@@ -32,6 +47,22 @@ var app = {
     $("p"+i).appendChild(x);
     $("p"+i).appendChild(view.add(i)).focus();
     app.navclose();
+  },
+  save: function(){
+    var entries = document.getElementsByTagName("tr");
+    var data = [];
+    for (var i = 0; i < entries.length; i++) {
+      var name = entries[i].children[0].textContent;
+      var score = entries[i].children[1].textContent;
+      localStorage.setItem("name"+i, name);
+      localStorage.setItem("score"+i, score);
+    }
+    var cnt = localStorage.length;
+    alert(cnt);
+    for (var i = 0; i < cnt.length; i++) {
+      var n = "name"+i;
+      alert("Name: " + localStorage.n);
+    }
   },
   remove: function(e){
     var elemid = e.parentElement.id;
@@ -118,13 +149,14 @@ var view = {
   score: function(players){
     var html = "<table class='centered'>";
     for (var i = 0; i < players.length; i++) {
-      html += "<tr><td class='big bold'>"+players[i]+
+      html += "<tr><td class='big bold'id='nameP"+i+"'>"+players[i]+
               "</td><td class='fixedwidth big bold' id='scoreP"+i+"'>0</td>"+
               "<td><i class='fa fa-plus fa-3x green' id='plusP"+i+"' onclick='app.plus(this)'>"+
               "</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
               "<i class='fa fa-minus fa-3x red' id='minusP"+i+"' onclick='app.minus(this)'>"+
               "</i></td></tr>";
     }
+    html += "</table>";
     return html;
   },
 
