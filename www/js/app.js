@@ -17,6 +17,10 @@ var app = {
       $("content").innerHTML = view.home;
     }
   },
+  home: function(){
+    $("content").innerHTML = view.home;
+    app.navclose();
+  },
   new: function(){
     $("content").innerHTML = view.new;
     app.navclose();
@@ -32,6 +36,15 @@ var app = {
     $("p"+i).appendChild(x);
     $("p"+i).appendChild(view.add(i)).focus();
     app.navclose();
+  },
+  save: function(){
+    var entries = document.getElementsByTagName("tr");
+    var data = {};
+    for (var i = 0; i < entries.length; i++) {
+      var name = entries[i].children[0].textContent;
+      var score = entries[i].children[1].textContent;
+      data.name = score;
+    }
   },
   remove: function(e){
     var elemid = e.parentElement.id;
@@ -118,13 +131,14 @@ var view = {
   score: function(players){
     var html = "<table class='centered'>";
     for (var i = 0; i < players.length; i++) {
-      html += "<tr><td class='big bold'>"+players[i]+
+      html += "<tr><td class='big bold'id='nameP"+i+"'>"+players[i]+
               "</td><td class='fixedwidth big bold' id='scoreP"+i+"'>0</td>"+
               "<td><i class='fa fa-plus fa-3x green' id='plusP"+i+"' onclick='app.plus(this)'>"+
               "</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
               "<i class='fa fa-minus fa-3x red' id='minusP"+i+"' onclick='app.minus(this)'>"+
               "</i></td></tr>";
     }
+    html += "</table>";
     return html;
   },
 
