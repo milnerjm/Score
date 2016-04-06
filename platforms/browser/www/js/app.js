@@ -49,19 +49,21 @@ var app = {
     app.navclose();
   },
   save: function(){
+    app.navclose();
     var entries = document.getElementsByTagName("tr");
-    var data = [];
-    for (var i = 0; i < entries.length; i++) {
-      var name = entries[i].children[0].textContent;
-      var score = entries[i].children[1].textContent;
-      localStorage.setItem("name"+i, name);
-      localStorage.setItem("score"+i, score);
-    }
-    var cnt = localStorage.length;
-    alert(cnt);
-    for (var i = 0; i < cnt.length; i++) {
-      var n = "name"+i;
-      alert("Name: " + localStorage.n);
+    var data = [], saveName = "";
+    app.openModal("saveModal");
+    $("enter2").onclick = function(){
+      saveName = $("savename").value;
+      $("saveModal").style.display = "none";
+      for (var i = 0; i < entries.length; i++) {
+        var name = entries[i].children[0].textContent;
+        var score = entries[i].children[1].textContent;
+        data[i] = "name"+i+":"+name+",score"+i+":"+score;
+      }
+      localStorage.setItem(saveName, JSON.stringify(data));
+      var ret = localStorage.getItem(saveName);
+      printObj(JSON.parse(ret));
     }
   },
   remove: function(e){
@@ -93,8 +95,8 @@ var app = {
   },
   plus: function(e){
     var player = e.id.replace(/plusP/,"scoreP");
-    app.openNumModal();
-    $("enter").onclick = function(){
+    app.openModal("numModal");
+    $("enter1").onclick = function(){
       var num = Number($("entry").value);
       var curScore = Number($(player).textContent);
       $(player).textContent = curScore + num;
@@ -103,16 +105,16 @@ var app = {
   },
   minus: function(e){
     var player = e.id.replace(/minusP/,"scoreP");
-    app.openNumModal();
-    $("enter").onclick = function(){
+    app.openModal("numModal");
+    $("enter1").onclick = function(){
       var num = Number($("entry").value);
       var curScore = Number($(player).textContent);
       $(player).textContent = curScore - num;
       $("numModal").style.display = "none";
     }
   },
-  openNumModal: function(){
-    var modal = $("numModal");
+  openModal: function(e){
+    var modal = $(e);
     // Display the modal
     modal.style.display = "block";
     $("entry").value = null;
