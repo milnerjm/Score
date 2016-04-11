@@ -143,18 +143,22 @@ var app = {
   del: function(){
     app.openModal("delModal");
     var len = $("list").children.length;
-    var elems = $("list").children;
-    for(var i=0; i!==len; i++) {
-      $("list").removeChild($("list").elems[i]);
+    if(len){
+      var elems = $("list").children;
+      for(var i=0; i!==len; i++) {
+        $("list").removeChild($("list").elems[i]);
+      }
     }
     var files = JSON.parse(storage.getItem("saveFiles"));
     for(var i=0; i!==files.length; i++){
       var eLI = makeE("li"), eA = makeE("a"), txt = makeT(files[i]);
-      eA.href = "javascript:app.remove("+files[i]+")";
+      eLI.id = files[i];
+      eA.href = "javascript:app.remove('"+files[i]+"')";
       $("list").appendChild(eLI).appendChild(eA).appendChild(txt);
     }
   },
   remove: function(file){
+    console.log(file);
     storage.removeItem(file);
     app.del();
   },
