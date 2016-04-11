@@ -11,6 +11,11 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/fa-4.5.0/css/fa.min.css"/>
 
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/view.js"></script>
+
     <title>Score!</title>
 </head>
 
@@ -24,6 +29,7 @@
       <a href="javascript:app.new()">New Game</a>
       <a href="javascript:app.save()">Save Game</a>
       <a href="javascript:app.load()">Load Game</a>
+      <a href="javascript:app.del()">Delete Game</a>
       <a href="javascript:app.roll()">Roll Dice</a>        
     </div>
 
@@ -37,13 +43,20 @@
     </div>
     <div id="saveModal" class="modal">
         <div class="modal-content">
-            <label class="blue">Enter Save File Name</label>
-            <br/>
+            <label class="blue">Enter Save File Name:</label>
+            <hr>
             <input type="text" id="savename" placeholder="ie. Munchkin">
             <div class="modal-btn" id="enter2">Enter</div>
         </div>
     </div>
-    
+    <div id="delModal" class="modal">
+        <div class="modal-content">
+            <label class="blue">Select a Game to Delete:</label>
+            <hr>
+            <ul id="list" class="list"></ul>
+        </div>
+    </div>
+
     <div id="footer" class="footer">
         <div class="app">
             <div id="deviceready">
@@ -57,11 +70,6 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/routing.js"></script>
-    <script type="text/javascript" src="js/view.js"></script>
     <script type="text/javascript">dev.initialize();</script>
     <script type="text/javascript">app.init();</script>
 </body>

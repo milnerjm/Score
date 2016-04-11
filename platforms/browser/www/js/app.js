@@ -1,8 +1,11 @@
 function $(id){
   return document.getElementById(id);
 }
-function make(name){
-  return document.createElement(name);
+function makeE(elem){
+  return document.createElement(elem);
+}
+function makeT(txt){
+  return document.createTextNode(txt);
 }
 
 var storage = window.localStorage;
@@ -11,15 +14,35 @@ function printObj(obj){
     var len = obj.length;
     var out = "";
     for(var i in obj){
-        out += i + ": " + i.value + "\n";
+        out += i + ": " + obj[i] + "\n";
     }
     alert(out);
     return null;
 }
 
+function saveLog(file){
+  var objF = JSON.parse(storage.getItem(file));
+  var objL = JSON.parse(storage.getItem("saveFiles"));
+  var outF = "\n" + file;
+  var outL = "\n******Files*********";
+  for(var i in objF){
+    outF += "\n" + i + ": " + objF[i];
+  }
+  for (var i=0; i!==objL.length; i++) {
+    outL += "\n" + objL[i];
+  }
+  outL += "\n********************";
+  console.log(outL);
+  console.log(outF);
+}
+
 var app = {
   init: function(){
     $("content").innerHTML = view.home;
+    if(!storage.getItem("saveFiles")){
+      var list = [];
+      storage.setItem("saveFiles", JSON.stringify(list));
+    }
   },
   onBackKey: function(){
     var isHome = document.getElementsByClassName("home").length;
@@ -83,14 +106,17 @@ var app = {
   },
   add: function(){
     var count = $("players").lastElementChild.id.replace(/p/,"");
-    var i = ++count, br = make("br"), div = make("div"), x = make("i");
+    var i = ++count, div = makeE("div"),
+        x = makeE("i"), input = makeE("input");
     div.id = "p"+i;
+    input.type = "text";
+    input.id = "player"+i;
+    input.placeholder = "Name";
     x.className = "fa fa-times fa-2x red btn";
     x.onclick = function(){app.remove(this)};
     $("players").appendChild(div);
-    $("p"+i).appendChild(br);
     $("p"+i).appendChild(x);
-    $("p"+i).appendChild(view.add(i)).focus();
+    $("p"+i).appendChild(input).focus()
     app.navclose();
   },
   save: function(){
@@ -103,16 +129,34 @@ var app = {
       $("saveModal").style.display = "none";
       for (var i=0; i!==entries.length; i++) {
         var name = entries[i].children[0].textContent;
-        var score = entries[i].children[1].textContent; 
+        var score = entries[i].children[1].textContent;
         data[name] = score;
       }
-      printObj(data);
-      localStorage.setItem(saveName, JSON.stringify(data));
+      var files = JSON.parse(storage.getItem("saveFiles"));
+      var pointer = files.length++;
+      storage.setItem(saveName, JSON.stringify(data));
+      files[pointer] = saveName;
+      storage.setItem("saveFiles", JSON.stringify(files));
+      saveLog(saveName);
     }
   },
-  remove: function(e){
-    var elemid = e.parentElement.id;
-    $("players").removeChild($(elemid));
+  del: function(){
+    app.openModal("delModal");
+    var len = $("list").children.length;
+    var elems = $("list").children;
+    for(var i=0; i!==len; i++) {
+      $("list").removeChild($("list").elems[i]);
+    }
+    var files = JSON.parse(storage.getItem("saveFiles"));
+    for(var i=0; i!==files.length; i++){
+      var eLI = makeE("li"), eA = makeE("a"), txt = makeT(files[i]);
+      eA.href = "javascript:app.remove("+files[i]+")";
+      $("list").appendChild(eLI).appendChild(eA).appendChild(txt);
+    }
+  },
+  remove: function(file){
+    storage.removeItem(file);
+    app.del();
   },
   load: function(){
     $("content").innerHTML = view.load;

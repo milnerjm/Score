@@ -9,7 +9,7 @@ var view = {
         "<i class='fa fa-arrow-right fa-2x green' onclick='app.score()'></i>",
 
   add: function(i){
-    var input = make("input");
+    var input = makeE("input");
     input.type = "text";
     input.id = "player"+i;
     input.placeholder = "Name";
@@ -32,7 +32,5 @@ var view = {
     return html;
   },
 
-  roll: "<h1>Roll the Dice!</h1>",
-
-  numModal: ""
+  roll: "<h1>Roll the Dice!</h1>"
 };

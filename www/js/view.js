@@ -3,19 +3,10 @@ var view = {
         "<img src='img/die.png' class='img' onclick='app.new()'></div>",
 
   new:  "<div id='players'><div id='p1'>"+
-        "</i><input type='text' id='player1' placeholder='Name'/></div></div>"+
+        "<input type='text' id='player1' placeholder='Name'/></div></div>"+
         "<br/><i onclick='app.add()' class='fa fa-plus fa-2x blue'></i>"+
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
         "<i class='fa fa-arrow-right fa-2x green' onclick='app.score()'></i>",
-
-  add: function(i){
-    var input = make("input");
-    input.type = "text";
-    input.id = "player"+i;
-    input.placeholder = "Name";
-    return input;
-  },
-
   load: "<h1>Load Previous Game</h1>",
 
   score: function(players){
@@ -32,7 +23,5 @@ var view = {
     return html;
   },
 
-  roll: "<h1>Roll the Dice!</h1>",
-
-  numModal: ""
+  roll: "<h1>Roll the Dice!</h1>"
 };
